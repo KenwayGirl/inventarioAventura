@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}Lista de Reservas{% endblock %}
+
+{% block contenido %}
+<div class="alert alert-info h2 text-center mb-4">Reservas e Inscripciones</div>
+
+<div class="table-responsive">
+    <table id="miTabla" class="table table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Turista</th>
+                <th>Experiencia</th>
+                <th>Precio</th>
+                <th>Fecha Inscripción</th>
+                <th>Estado Pago</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in reservas %}
+            <tr>
+                <td>{{ res.id }}</td>
+                <td>{{ res.usuario.username }}</td>
+                <td>{{ res.experiencia.titulo }}</td>
+                <td>${{ res.experiencia.precio }}</td>
+                <td>{{ res.fecha_inscripcion }}</td>
+                <td>
+                    {% if res.estado_pago == 'Confirmado' %}
+                        <span class="badge badge-success">Confirmado (Pagado)</span>
+                    {% else %}
+                        <span class="badge badge-warning">Pendiente</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if perfil.rol == 'Turista' or perfil.rol == 'Administrador' %}
+                        <a href="{% url 'cambiarPagoReserva' res.id %}" class="btn btn-info btn-sm">
+                            Cambiar Pago
+                        </a>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalRes{{ res.id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                        <!-- Modal Confirmación -->
+                        <div class="modal fade" id="modalRes{{ res.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirmación</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de eliminar la reserva #{{ res.id }}?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        <a href="{% url 'eliminarReserva' res.id %}" class="btn btn-danger">Confirmar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <span>Solo lectura</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}Mi Perfil{% endblock %}
+
+{% block contenido %}
+<div class="alert alert-info h2 text-center mb-4">Mi Perfil de Usuario</div>
+<div class="card shadow p-4 col-md-6 mx-auto">
+    <p><b>Usuario:</b> {{ user.username }}</p>
+    <p><b>Correo:</b> {{ user.email }}</p>
+    <p><b>Rol en el Ecoparque:</b> {{ perfil.rol }}</p>
+    <p><b>Teléfono:</b> {{ perfil.telefono }}</p>
+    <a href="{% url 'home' %}" class="btn btn-danger">Volver</a>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block contenido %}
+<div class="alert alert-info h2 text-center mb-4">{{ titulo }}</div>
+
+<form method="post" class="col-md-8 offset-md-2 border border-3 border-secondary rounded p-4 bg-white">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-grid gap-2">
+        <input type="submit" value="Enviar Datos" class="btn btn-primary btn-block">
+        <a href="{% url 'experienciasData' %}" class="btn btn-danger btn-block">Volver</a>
+    </div>
+</form>
+{% endblock %}

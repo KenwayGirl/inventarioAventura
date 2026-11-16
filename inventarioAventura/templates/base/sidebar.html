@@ -1,0 +1,75 @@
+{% load static %}
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
+    <div class="sidebar-brand-icon">
+        <i class="fas fa-tree"></i>
+    </div>
+    <div class="sidebar-brand-text mx-2">Aventuras <sup>Sur</sup></div>
+    </a>
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">
+            <span>Inicio</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Opciones solo para el Admin-->
+    {% if user.is_superuser or perfil.rol == 'Administrador' %}
+    <div class="sidebar-heading">
+        Administrador
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'usuariosData' %}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Gestión de Usuarios</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'categoriasData' %}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Gestión de Categorías</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+    {% endif %}
+
+    <div class="sidebar-heading">
+        Ecoparque
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'experienciasData' %}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Experiencias</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'reservasData' %}">
+            <i class="fas fa-fw fa-calendar"></i>
+            <span>Reservas / Inscripciones</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'mi_perfil' %}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Mi Perfil</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>

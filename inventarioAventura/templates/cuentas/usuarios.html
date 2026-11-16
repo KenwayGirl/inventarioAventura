@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}Lista de Usuarios{% endblock %}
+
+{% block contenido %}
+<div class="alert alert-info h2 text-center mb-4">Lista de Usuarios</div>
+
+<a href="{% url 'crearUsuario' %}" class="btn btn-primary mb-3">Registrar Usuario</a>
+
+<div class="table-responsive">
+    <table id="miTabla" class="table table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in perfiles %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.usuario.username }}</td>
+                <td>{{ p.usuario.email }}</td>
+                <td>{{ p.rol }}</td>
+                <td>{{ p.telefono }}</td>
+                <td>
+                    <a href="{% url 'editarUsuario' p.id %}" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    {% if p.usuario != user %}
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalUser{{ p.id }}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                    <!-- Modal Confirmación -->
+                    <div class="modal fade" id="modalUser{{ p.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Confirmación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de eliminar al usuario {{ p.usuario.username }}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <a href="{% url 'eliminarUsuario' p.id %}" class="btn btn-danger">Confirmar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

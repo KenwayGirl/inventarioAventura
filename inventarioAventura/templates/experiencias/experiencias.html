@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}Lista de Experiencias{% endblock %}
+
+{% block contenido %}
+<div class="alert alert-info h2 text-center mb-4">Catálogo de Experiencias</div>
+
+{% if perfil.rol == 'Administrador' or perfil.rol == 'Guia' %}
+<a href="{% url 'crearExperiencia' %}" class="btn btn-primary mb-3">Registrar Experiencia</a>
+{% endif %}
+
+<div class="table-responsive">
+    <table id="miTabla" class="table table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Cupo Máx.</th>
+                <th>Fecha / Hora</th>
+                <th>Creador</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exp in experiencias %}
+            <tr>
+                <td>{{ exp.id }}</td>
+                <td>{{ exp.titulo }}</td>
+                <td>{{ exp.descripcion }}</td>
+                <td>{{ exp.categoria.nombre }}</td>
+                <td>${{ exp.precio }}</td>
+                <td>{{ exp.cupo_maximo }}</td>
+                <td>{{ exp.fecha_realizacion }}</td>
+                <td>{{ exp.creador.username }}</td>
+                <td>
+                    {% if perfil.rol == 'Turista' %}
+                        <a href="{% url 'inscribirExperiencia' exp.id %}" class="btn btn-success btn-sm">
+                            Inscribirse / Reservar
+                        </a>
+                    {% endif %}
+
+                    {% if perfil.rol == 'Administrador' or perfil.rol == 'Guia' %}
+                        <a href="{% url 'editarExperiencia' exp.id %}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if perfil.rol == 'Administrador' %}
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalExp{{ exp.id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                        <!-- Modal Confirmación -->
+                        <div class="modal fade" id="modalExp{{ exp.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirmación</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de eliminar la experiencia {{ exp.titulo }}?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        <a href="{% url 'eliminarExperiencia' exp.id %}" class="btn btn-danger">Confirmar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

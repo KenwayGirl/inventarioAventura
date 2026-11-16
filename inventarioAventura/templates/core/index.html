@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% block titulo %}Aventuras del Sur{% endblock %}
+
+{% block contenido %}
+<div class="alert alert-info display-4 text-center mb-4">
+    Ecoparque Aventuras del Sur
+</div>
+
+{% if user.is_superuser or perfil.rol == 'Administrador' %}
+    <h3>Bienvenido {{ user.username }}, eres un Administrador</h3>
+{% elif perfil.rol == 'Guia' %}
+    <h3>Bienvenido {{ user.username }}, eres un Guía / Operador</h3>
+{% else %}
+    <h3>Bienvenido {{ user.username }}, eres un Turista / Cliente</h3>
+{% endif %}
+
+<div class="row mt-4">
+    {% if user.is_superuser or perfil.rol == 'Administrador' %}
+    <div class="col-md-3 mb-3">
+        <div class="card border-left-danger shadow py-2 px-3">
+            <h5>Gestión de Usuarios</h5>
+            <a href="{% url 'usuariosData' %}" class="btn btn-primary btn-sm mt-2">Ir a Usuarios</a>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-left-info shadow py-2 px-3">
+            <h5>Categorías ({{ total_categorias }})</h5>
+            <a href="{% url 'categoriasData' %}" class="btn btn-info btn-sm mt-2">Ir a Categorías</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="col-md-3 mb-3">
+        <div class="card border-left-primary shadow py-2 px-3">
+            <h5>Experiencias ({{ total_experiencias }})</h5>
+            <a href="{% url 'experienciasData' %}" class="btn btn-success btn-sm mt-2">Ver Experiencias</a>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card border-left-warning shadow py-2 px-3">
+            <h5>Reservas ({{ total_reservas }})</h5>
+            <a href="{% url 'reservasData' %}" class="btn btn-warning btn-sm mt-2">Ver Reservas</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

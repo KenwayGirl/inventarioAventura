@@ -1,0 +1,24 @@
+CREDENCIALES EV3
+
+ECOPARQUE Y RESERVA NATURAL "AVENTURAS DEL SUR" 
+
+Base de Datos MySQL: aventura_db
+Archivo de respaldo incluido: aventura_db.sql
+
+1. ROL ADMINISTRADOR 
+   - Usuario: admin
+   - Contraseña: 123456
+
+2. ROL GUÍA / OPERADOR 
+   - Usuario Guía 1: carlos
+   - Contraseña: patroclo123456
+
+   - Usuario Guía 2: elena
+   - Contraseña: patroclo123456
+
+3. ROL TURISTA / CLIENTE 
+   - Usuario Turista 1: pedro
+   - Contraseña: patroclo123456
+
+   - Usuario Turista 2: ana
+   - Contraseña: patroclo123456
